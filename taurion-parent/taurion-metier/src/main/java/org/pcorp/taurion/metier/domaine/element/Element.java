@@ -1,6 +1,7 @@
 package org.pcorp.taurion.metier.domaine.element;
 
 import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
+import org.pcorp.taurion.metier.domaine.etat.EtatElement;
 import org.pcorp.taurion.metier.domaine.evenement.ResultatDiminutionIntegrite;
 
 public class Element {

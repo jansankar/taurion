@@ -1,6 +1,6 @@
 package org.pcorp.taurion.metier.domaine.evenement;
 
-import org.pcorp.taurion.metier.domaine.element.EtatElement;
+import org.pcorp.taurion.metier.domaine.etat.EtatElement;
 
 public class ResultatDiminutionIntegrite {
 	private Integer nouvelleIntegrite;
