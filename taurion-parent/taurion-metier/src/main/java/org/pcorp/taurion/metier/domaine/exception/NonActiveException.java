@@ -3,6 +3,7 @@ package org.pcorp.taurion.metier.domaine.exception;
 import org.pcorp.taurion.metier.domaine.element.Element;
 
 public class NonActiveException extends Exception {
+	private static final long serialVersionUID = 1L;
 	private Element elementDeclencheur;
 
 	public NonActiveException(Element element) {

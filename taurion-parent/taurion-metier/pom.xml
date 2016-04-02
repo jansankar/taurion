@@ -7,9 +7,9 @@
     <artifactId>taurion-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.pcorp.taurion</groupId>
+  
   <artifactId>taurion-metier</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  
   <name>taurion-metier</name>
   <url>http://maven.apache.org</url>
   <properties>
