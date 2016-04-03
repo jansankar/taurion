@@ -5,9 +5,10 @@ public class Vecteur {
 	private Float y;
 	private Float z;
 
-	@SuppressWarnings("unused")
-	private Vecteur() {
-
+	protected Vecteur() {
+		this.x = 0f;
+		this.y = 0f;
+		this.z = 0f;
 	}
 
 	private void init(Float x, Float y, Float z) {

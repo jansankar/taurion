@@ -10,6 +10,10 @@ public class Vitesse extends Vecteur {
 		super(vecteurVitesse);
 	}
 
+	public Vitesse() {
+		super();
+	}
+
 	public void accelere(Acceleration a) {
 		augmenterVecteur(a.accelere());
 	}
