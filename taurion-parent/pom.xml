@@ -12,11 +12,26 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>3.1.2.RELEASE</spring.version>
+    <spring.version>4.2.5.RELEASE</spring.version>
+    <junit.version>4.12</junit.version>
   </properties>
 
   <modules>
   	<module>taurion-front</module>
     <module>taurion-metier</module>
   </modules>
+  
+  <dependencyManagement>
+  	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+    <dependency>
+	    <groupId>junit</groupId>
+    	<artifactId>junit</artifactId>
+    	<version>${junit.version}</version>
+    	<scope>test</scope>
+    </dependency>
+  </dependencyManagement>	
 </project>

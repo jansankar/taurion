@@ -21,6 +21,10 @@ public class Coordonnees {
 		this.z = z;
 	}
 
+	public Coordonnees clone() {
+		return new Coordonnees(x, y, z);
+	}
+	
 	public Float getX() {
 		return x;
 	}

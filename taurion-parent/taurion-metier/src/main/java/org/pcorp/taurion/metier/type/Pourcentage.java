@@ -1,4 +1,4 @@
-package org.pcorp.taurion.metier.domaine.type;
+package org.pcorp.taurion.metier.type;
 
 public class Pourcentage {
 	private Float valeur;
