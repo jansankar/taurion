@@ -19,72 +19,99 @@ public class Rocket_mk00 implements Rocket {
 	private SourceEnergie batterie;
 	private Charge charge;
 	private EtatElement etatElement;
-	
-	// 
+
+	//
 	private Coordonnees coordonnesCible;
 
-	public Rocket_mk00(Reservoir reservoir, Propulseur propulseur,
-			SourceEnergie batterie, Charge charge) {
+	public Rocket_mk00(Reservoir reservoir, Propulseur propulseur, SourceEnergie batterie, Charge charge) {
 		super();
 		this.vitesseActuelle = new Vitesse();
 		this.reservoir = reservoir;
 		this.propulseur = propulseur;
 		this.batterie = batterie;
 		this.charge = charge;
+
+		this.batterie.connecterElement(propulseur);
 	}
 
+	@Override
 	public void setCible(Coordonnees coordonnes) {
 		coordonnesCible = coordonnes;
 	}
 
+	@Override
 	public void positionneSurPasDeTir(Coordonnees pasDeTir) {
-	// FIXME : passer un sabord
+		// FIXME : passer un sabord
 		this.positionActuelle = pasDeTir.clone();
 	}
-	
+
+	@Override
 	public Coordonnees getCoordonnees() {
 		return positionActuelle;
 	}
 
+	@Override
 	public Coordonnees getCoordonneesCible() {
 		return coordonnesCible;
 	}
 
+	@Override
 	public Vitesse getVitesse() {
 		return vitesseActuelle;
 	}
 
-	public void active() {
+	@Override
+	public void activer() {
+		reservoir.activer();
+		batterie.activer();
+		propulseur.activer();
 		etatElement = EtatElement.ACTIF;
 	}
 
+	@Override
 	public void desactive() {
+		reservoir.inactiver();
+		batterie.inactiver();
+		propulseur.inactiver();
+
 		etatElement = EtatElement.INACTIF;
 	}
 
+	@Override
 	public boolean estActive() {
-		return etatElement == EtatElement.ACTIF ;
+		return etatElement == EtatElement.ACTIF;
 	}
 
+	@Override
 	public void armementCharge() {
 		if (charge != null)
 			charge.armement();
 	}
 
+	@Override
 	public void desarmementCharge() {
 		if (charge != null)
 			charge.desarmement();
 	}
 
+	@Override
 	public EtatArmement getEtatArmement() {
 		if (charge != null)
 			return charge.getEtatArmement();
 		return EtatArmement.DESARME;
 	}
 
+	@Override
 	public void miseAFeu() {
-		// TODO Auto-generated method stub
-		
-	}
+		// check activation
+		// TODO: check activation
 
+		// activation propulseur jusqu'à la cible
+		try {
+			propulseur.activePoussee(1f, 1f, this.reservoir);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

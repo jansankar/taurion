@@ -10,7 +10,7 @@ public interface Rocket {
 	public Coordonnees getCoordonnees();
 	public Coordonnees getCoordonneesCible();
 	public Vitesse getVitesse();
-	public void active();
+	public void activer();
 	public void desactive();
 	public boolean estActive();
 	

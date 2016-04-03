@@ -33,4 +33,8 @@ public class Vitesse extends Vecteur {
 	public Float getVitesseZ() {
 		return getZ();
 	}
+
+	public Float getVitesse() {
+		return (float) Math.sqrt(((getX() * getX()) + (getY() * getY()) + (getZ() * getZ())));
+	}
 }
