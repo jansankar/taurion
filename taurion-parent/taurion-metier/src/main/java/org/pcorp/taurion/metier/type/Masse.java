@@ -8,6 +8,10 @@ public class Masse {
 		this.masse = masse;
 	}
 
+	public Masse(Tonne t) {
+		this.masse = t.getKg();
+	}
+
 	public Float getMasse() {
 		return this.masse;
 	}

@@ -11,18 +11,18 @@ import org.pcorp.taurion.metier.type.Tonne;
 public class TestParent {
 	protected static final Float INDICE_CARBURANT = 1f;
 	protected static final Float MASSE_VOLUMIQUE = 1f;
-	protected static final Float MASSE_RESERVOIR = Tonne.kg(500f);
+	protected static final Float MASSE_RESERVOIR = Tonne.enKg(500f);
 	protected static final Float CAPACITE_RESERVOIR = MASSE_RESERVOIR * 0.9f;
 	protected static final Float VIDE = 0f;
 	protected static final Integer INTEGRITE_RESERVOIR = 10;
 
-	protected static final Float MASSE_PROPULSEUR = Tonne.kg(1f);
+	protected static final Float MASSE_PROPULSEUR = Tonne.enKg(1f);
 	protected static final Integer INTEGRITE_PROPULSEUR = 10;
 	protected static final Float TWR = 10f;
 	protected static final Float ISP = 200f;
 	protected static final Float CONSO_PROPULSEUR = 200f;
 
-	protected static final Float MASSE_GENERATEUR = Tonne.kg(0.5f);
+	protected static final Float MASSE_GENERATEUR = Tonne.enKg(0.5f);
 	protected static final Integer INTEGRITE_GENERATEUR = 10;
 	protected static final Float DEBIT_GENERATEUR = 500f;
 

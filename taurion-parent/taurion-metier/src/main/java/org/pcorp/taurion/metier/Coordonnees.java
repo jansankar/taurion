@@ -15,16 +15,32 @@ public class Coordonnees {
 		init(x, y, z);
 	}
 
+	public Coordonnees(Integer x, Integer y, Integer z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
+	public Coordonnees(Double x, Double y, Double z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
+	public Coordonnees(Long x, Long y, Long z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
 	private void init(Float x, Float y, Float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
+	@Override
 	public Coordonnees clone() {
 		return new Coordonnees(x, y, z);
 	}
-	
+
 	public Float getX() {
 		return x;
 	}
