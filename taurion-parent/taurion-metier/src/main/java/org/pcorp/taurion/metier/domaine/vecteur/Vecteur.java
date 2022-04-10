@@ -64,6 +64,10 @@ public class Vecteur {
 		this.z = aCopier.getZ();
 	}
 
+	public boolean vecteurNul() {
+		return x == 0 && y == 0 &&  z == 0;
+	}
+	
 	public Float getX() {
 		return x;
 	}

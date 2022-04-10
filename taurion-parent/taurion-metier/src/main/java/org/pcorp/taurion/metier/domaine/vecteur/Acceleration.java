@@ -10,6 +10,10 @@ public class Acceleration extends Vecteur {
 		super(v);
 	}
 
+	public boolean acceleration() {
+		return !vecteurNul();
+	}
+	
 	public Vitesse accelere(Float t) {
 		Vecteur v = new Vecteur(getX() * t, getY() * t, getZ() * t);
 		return new Vitesse(v);

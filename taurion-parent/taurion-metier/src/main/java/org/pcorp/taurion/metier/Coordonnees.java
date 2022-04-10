@@ -1,6 +1,7 @@
 package org.pcorp.taurion.metier;
 
 import org.pcorp.taurion.metier.domaine.vecteur.Vecteur;
+import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
 
 public class Coordonnees {
 	private Float x;
@@ -38,6 +39,12 @@ public class Coordonnees {
 		this.z = z;
 	}
 
+	public void appliqueDeplacement(Vitesse v, Float t) {
+		x = v.getVitesseX() * t;
+		y = v.getVitesseY() * t;
+		z = v.getVitesseZ() * t;
+	}
+	
 	public Vecteur getDifference(Coordonnees destination) {
 		Float diffX = destination.getX() - this.x;
 		Float diffY = destination.getY() - this.y;

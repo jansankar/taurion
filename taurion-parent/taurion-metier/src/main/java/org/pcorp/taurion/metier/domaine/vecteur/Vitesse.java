@@ -37,4 +37,17 @@ public class Vitesse extends Vecteur {
 	public Float getVitesse() {
 		return (float) Math.sqrt(((getX() * getX()) + (getY() * getY()) + (getZ() * getZ())));
 	}
+
+	public Vitesse clone() {
+		return new Vitesse(this);
+	}
+	
+	public Vitesse moyenne(Vitesse vitesse) {
+		float vx = (vitesse.getVitesseX()+getVitesseX())/2;
+		float vy = (vitesse.getVitesseY()+getVitesseY())/2;
+		float vz = (vitesse.getVitesseZ()+getVitesseZ())/2;
+		
+		return new Vitesse(new Vecteur(vx, vy, vz));
+	}
+
 }

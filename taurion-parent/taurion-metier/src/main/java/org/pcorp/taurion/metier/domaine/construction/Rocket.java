@@ -4,6 +4,11 @@ import org.pcorp.taurion.metier.Coordonnees;
 import org.pcorp.taurion.metier.domaine.etat.EtatArmement;
 import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
 
+/**
+ * Ciblage via position actualisé de la cible (pas d'anticipation)
+ * @author jeanp
+ *
+ */
 public interface Rocket {
 	public void setCible(Coordonnees coordonnes);
 	public void positionneSurPasDeTir(Coordonnees pasDeTir);
