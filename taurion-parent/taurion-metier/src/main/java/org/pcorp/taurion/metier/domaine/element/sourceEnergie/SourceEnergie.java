@@ -96,6 +96,7 @@ public class SourceEnergie extends Element {
 		diminueIntegrite(Math.round(degatsPropages - degatsRepartis));
 	}
 
+	// TODO: ajouter un synchro la dessus
 	public void connecterElement(Element e) {
 		if (consommateurs == null) {
 			consommateurs = new LinkedList<Element>();
