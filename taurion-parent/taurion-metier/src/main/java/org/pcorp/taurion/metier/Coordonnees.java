@@ -1,5 +1,7 @@
 package org.pcorp.taurion.metier;
 
+import org.pcorp.taurion.metier.domaine.vecteur.Vecteur;
+
 public class Coordonnees {
 	private Float x;
 	private Float y;
@@ -34,6 +36,14 @@ public class Coordonnees {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	public Vecteur getDifference(Coordonnees destination) {
+		Float diffX = destination.getX() - this.x;
+		Float diffY = destination.getY() - this.y;
+		Float diffZ = destination.getZ() - this.z;
+
+		return new Vecteur(diffX, diffY, diffZ);
 	}
 
 	@Override

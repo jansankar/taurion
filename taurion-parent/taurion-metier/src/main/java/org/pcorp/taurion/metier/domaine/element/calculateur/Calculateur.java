@@ -13,6 +13,12 @@ public class Calculateur extends Element {
 	}
 
 	public Vecteur calculDirection(Coordonnees origine, Coordonnees destination) {
-		return null;
+		Vecteur v = origine.getDifference(destination);
+		return v;
 	}
+
+	// public Coordonnees avance(Distance distanceParcourue, Vecteur direction)
+	// {
+
+	// s}
 }

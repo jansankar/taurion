@@ -12,8 +12,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>4.2.5.RELEASE</spring.version>
+    <spring.version>5.3.18</spring.version>
     <junit.version>4.12</junit.version>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
 
   <modules>
@@ -22,6 +24,7 @@
   </modules>
   
   <dependencyManagement>
+   <dependencies>
   	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-core</artifactId>
@@ -33,5 +36,6 @@
     	<version>${junit.version}</version>
     	<scope>test</scope>
     </dependency>
+    </dependencies>
   </dependencyManagement>	
 </project>

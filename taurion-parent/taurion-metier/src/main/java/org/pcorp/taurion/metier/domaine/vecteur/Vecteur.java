@@ -17,6 +17,21 @@ public class Vecteur {
 		this.z = z;
 	}
 
+	public Vecteur(Integer x, Integer y, Integer z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
+	public Vecteur(Double x, Double y, Double z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
+	public Vecteur(Long x, Long y, Long z) {
+		super();
+		init(x.floatValue(), y.floatValue(), z.floatValue());
+	}
+
 	public Vecteur(Vecteur v) {
 		init(v.getX(), v.getY(), v.getZ());
 	}
