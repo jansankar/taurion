@@ -21,6 +21,7 @@
   <modules>
   	<module>taurion-front</module>
     <module>taurion-metier</module>
+    <module>taurion-backend</module>
   </modules>
   
   <dependencyManagement>

@@ -1,25 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styles from './App.module.scss';
+import AppCol from './commun/composants/grille/AppCol';
+import AppRow from './commun/composants/grille/AppRow';
+import { BrowserRouter as Router } from "react-router-dom";
+
+import AppMenuGauche, { AppMenuGaucheProps, MenuGaucheItems } from './menu/AppMenuGauche';
+import AppRoutes from './menu/AppRoutes';
+
+const useAppMenuGaucheItems = () => {
+  const elements: MenuGaucheItems[] = [];
+  elements.push({code:"test-depl", lien: "test-depl"});
+  elements.push({code:"test-depl-01", lien: "test-depl"});
+  return elements;
+}
 
 function App() {
+const menuGaucheItems = useAppMenuGaucheItems() as MenuGaucheItems[];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Router>
+    <div className={styles.App}>
+      <AppRow>
+        <AppCol md ={{span : 1}} >
+          <AppMenuGauche elements={menuGaucheItems}/>
+        </AppCol>
+        <AppCol md ={{span : 11}} >
+         <AppRoutes />
+        </AppCol>
+      </AppRow>
     </div>
+    </Router>
   );
 }
 
