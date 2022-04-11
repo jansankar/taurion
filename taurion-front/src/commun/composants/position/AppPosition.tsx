@@ -9,15 +9,6 @@ import {
   LabelList
 } from "recharts";
 
-const data = [
-  { x: 100, y: 200, z: 200 },
-  { x: 120, y: 100, z: 260 },
-  { x: 170, y: 300, z: 400 },
-  { x: 140, y: 250, z: 280 },
-  { x: 150, y: 400, z: 500 },
-  { x: 110, y: 280, z: 200 }
-];
-
 export type AppPositionProps = {
     coordonnees: Coordonnee;
 }
@@ -26,6 +17,22 @@ export type Coordonnee = {
     x: number;
     y: number;
     code: string;
+  };
+
+  const CustomizedDot = (props:any) => {
+    const { cx, cy, stroke, payload, value } = props;
+
+    return (
+      <svg x={cx - 10} y={cy - 10} width={20} height={25} 
+      fill="transparent" 
+      stroke="#23d18b" 
+      strokeWidth={2}
+      viewBox="0 0 20 20">
+           <path id="svg_1" d="M0 0 L 10 10 L20 0" />
+           <circle id="svg_2" cx="10" cy="2" r="1" fill="#23d18b" />
+           <text x="0" y="22" strokeWidth={1} style={{fontSize: '12', fontWeight: "lighter", fontFamily:"monospace"}}>{payload.code}</text> 
+      </svg>
+    );
   };
 
 export default function AppPosition({coordonnees} : AppPositionProps) {
@@ -46,9 +53,8 @@ export default function AppPosition({coordonnees} : AppPositionProps) {
       <CartesianGrid />
       <XAxis type="number" dataKey="x" domain={[-200, 200]} />
       <YAxis type="number" dataKey="y" domain={[-200, 200]} />
-      <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-      <Scatter name="A school" data={data} fill="#23d18b">
-        <LabelList dataKey="code" position="bottom" fill="#23d18b"/>
+      <Tooltip cursor={{ strokeDasharray: "3 3" }}/>
+      <Scatter data={data} fill="#23d18b"  isAnimationActive={true} animationDuration={1000}  shape={<CustomizedDot />} >
       </Scatter>
     </ScatterChart>
   );

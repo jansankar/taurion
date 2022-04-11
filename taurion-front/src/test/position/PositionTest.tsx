@@ -5,7 +5,7 @@ import AppPosition, { Coordonnee } from "../../commun/composants/position/AppPos
 
 
 export const PositionTest = () => {
-    const [contact, setContact] = useState({x:15, y:15, code:'i001'});
+    const [contact, setContact] = useState({x:15, y:15, code:'i01'});
     const compteur = useRef(0);
 
     useEffect(() => {
