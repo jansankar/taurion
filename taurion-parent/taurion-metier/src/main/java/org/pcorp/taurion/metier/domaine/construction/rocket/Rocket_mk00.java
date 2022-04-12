@@ -8,10 +8,10 @@ import org.pcorp.taurion.metier.domaine.element.armement.charge.Charge;
 import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
 import org.pcorp.taurion.metier.domaine.etat.EtatArmement;
 import org.pcorp.taurion.metier.domaine.etat.EtatElement;
-import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
+import org.pcorp.taurion.metier.domaine.vecteur.Vecteur;
 import org.pcorp.taurion.metier.element.carburant.Reservoir;
 
-public class Rocket_mk00 extends Mobile implements Rocket  {
+public class Rocket_mk00 extends Mobile implements Rocket {
 	// information rocket
 	private Reservoir reservoir;
 	private Propulseur propulseur;
@@ -100,11 +100,17 @@ public class Rocket_mk00 extends Mobile implements Rocket  {
 		// TODO: check activation
 
 		// activation propulseur jusqu'à la cible
+		Float poussee;
 		try {
-			propulseur.activePoussee(1f, 1f, this.reservoir);
+			poussee = propulseur.activePoussee(1f, 1f, this.reservoir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		Vecteur direction = getCoordonnees().getDifference(coordonnesCible);
+		// comment calculer le vecteur d'acceleration en fonction de la
+		// direction ?
+		// regle de 3 pour distribuer l'acceleration
 
 	}
 }
