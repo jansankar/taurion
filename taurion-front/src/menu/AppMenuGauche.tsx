@@ -17,8 +17,8 @@ export default function AppMenuGauche(props: AppMenuGaucheProps) {
   
   return (
     <>
-      {elements.map((element) => (
-        <div key="{element}" onClick={() => navigate(element.lien)}>{element.code}</div>
+      {elements.map((element, index) => (
+        <div key={index} onClick={() => navigate(element.lien)}>{element.code}</div>
       ))}
     </>
   );
