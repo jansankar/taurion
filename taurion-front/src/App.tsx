@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import AppMenuGauche, { AppMenuGaucheProps, MenuGaucheItems } from './menu/AppMenuGauche';
 import AppRoutes from './menu/AppRoutes';
+import { Container } from 'react-bootstrap';
 
 const useAppMenuGaucheItems = () => {
   const elements: MenuGaucheItems[] = [];
@@ -20,6 +21,7 @@ const menuGaucheItems = useAppMenuGaucheItems() as MenuGaucheItems[];
   return (
     <Router>
     <div className={styles.App}>
+      <Container fluid>
       <AppRow>
         <AppCol md ={{span : 1}} >
           <AppMenuGauche elements={menuGaucheItems}/>
@@ -28,6 +30,7 @@ const menuGaucheItems = useAppMenuGaucheItems() as MenuGaucheItems[];
          <AppRoutes />
         </AppCol>
       </AppRow>
+      </Container>
     </div>
     </Router>
   );

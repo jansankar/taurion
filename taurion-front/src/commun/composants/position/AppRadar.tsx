@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import AppPosition from "./AppPosition";
+import styles from './AppRadar.module.scss';
 import { Echo } from "./icons/IconDictionary";
 
 export const AppRadar = ({echos} : {echos:Echo[]}) => {
@@ -18,6 +19,11 @@ export const AppRadar = ({echos} : {echos:Echo[]}) => {
         setChoixZoom("OUT");
     }
 
+    function zoomEquals() {
+        setChoixZoom("NONE");
+    }
+
+
     function reinit() {
         setXMin(-200);
         setXMax(200);
@@ -29,12 +35,10 @@ export const AppRadar = ({echos} : {echos:Echo[]}) => {
     function resize(posX : number, posY:number) {
         const clicX = Math.round(posX);
         const clicY = Math.round(posY);
-console.log(clicX);
-console.log(clicY);
+
         let xWidth = xMax - xMin;
         let yWidth = yMax - yMin;
-        console.log(xWidth);
-        console.log(yWidth);
+
         if (choixZoom == 'IN') {
             xWidth = Math.round(xWidth/2);
             yWidth = Math.round(yWidth/2);
@@ -55,9 +59,12 @@ console.log(clicY);
     return (
         <>
         <AppPosition echos={echos} xMin={xMin} xMax={xMax} yMin={yMin} yMax={yMax} resize={resize}/>
-        <Button onClick={zoomIn}>+</Button> &nbsp;
-        <Button onClick={zoomOut}>-</Button>&nbsp;
-        <Button onClick={reinit}>O</Button>&nbsp;
+        <div style={{marginLeft: "70px"}}>
+        <Button onClick={zoomIn} className={styles.Button} style={choixZoom == "IN" ? {borderColor: "#5afc75"} : {}}>+</Button> 
+        <Button onClick={zoomOut} className={styles.Button} style={choixZoom == "OUT" ? {borderColor: "#5afc75"} : {}}>-</Button>
+        <Button onClick={zoomEquals} className={styles.Button} style={choixZoom == "NONE" ? {borderColor: "#5afc75"} : {}}>=</Button>
+        <Button onClick={reinit} className={styles.Button}>O</Button>
+        </div>
         </>
     );
 }
