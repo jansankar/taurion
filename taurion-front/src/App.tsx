@@ -4,7 +4,7 @@ import AppCol from './commun/composants/grille/AppCol';
 import AppRow from './commun/composants/grille/AppRow';
 import { BrowserRouter as Router } from "react-router-dom";
 
-import AppMenuGauche, { AppMenuGaucheProps, MenuGaucheItems } from './menu/AppMenuGauche';
+import AppMenuGauche, { MenuGaucheItems } from './menu/AppMenuGauche';
 import AppRoutes from './menu/AppRoutes';
 import { Container } from 'react-bootstrap';
 

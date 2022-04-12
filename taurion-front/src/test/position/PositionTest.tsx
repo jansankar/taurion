@@ -49,13 +49,13 @@ export const PositionTest = () => {
   return (
     <div>
       <AppRow>
-        <AppCol span="6">
+        <AppCol md={4}>
           <AppRadar echos={contact} />
         </AppCol>
-        <AppCol span="6"></AppCol>
+        <AppCol md={6}></AppCol>
       </AppRow>
       <AppRow>
-        <AppCol span="12"></AppCol>
+        <AppCol md={12}></AppCol>
       </AppRow>
     </div>
   );

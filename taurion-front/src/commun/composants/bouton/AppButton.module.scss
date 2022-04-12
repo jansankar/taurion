@@ -1,0 +1,26 @@
+button.push {
+    background-color: #282c34;
+    color: #5afc75;
+    width: 38px;
+    border-color: grey;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 0.5rem;
+    &:hover, &:active {
+        color: yellow;
+        background-color: #282c34;
+        border-color: yellow;
+        box-shadow: none;
+    }
+   &:focus {
+    background-color: #282c34;
+    color: #5afc75;
+    border-color: grey;
+    box-shadow: none;
+    }
+  }
+
+
+  button.active {
+      border-color: #5afc75 !important;
+  }
