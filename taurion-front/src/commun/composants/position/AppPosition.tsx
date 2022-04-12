@@ -12,6 +12,11 @@ import { Echo, EchoFrpDot, EchoMisDot, getColor } from "./icons/IconDictionary";
 
 export type AppPositionProps = {
   echos: Echo[];
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+  resize: any;
 };
 
 const CustomizedDot = (props: any) => {
@@ -44,7 +49,7 @@ const CustomTooltip = (props: any) => {
   return null;
 };
 
-export default function AppPosition({ echos }: AppPositionProps) {
+export default function AppPosition({ echos, xMin, xMax, yMin, yMax, resize }: AppPositionProps) {
   return (
     <ScatterChart
       width={400}
@@ -55,10 +60,11 @@ export default function AppPosition({ echos }: AppPositionProps) {
         bottom: 20,
         left: 20,
       }}
+      onClick={(event)=> resize(event.xValue, event.yValue)}
     >
       <CartesianGrid />
-      <XAxis type="number" dataKey="x" domain={[-200, 200]} />
-      <YAxis type="number" dataKey="y" domain={[-200, 200]} />
+      <XAxis type="number" dataKey="x" domain={[xMin, xMax]} allowDataOverflow={true}/>
+      <YAxis type="number" dataKey="y" domain={[yMin, yMax]} allowDataOverflow={true}/>
       <Tooltip
         cursor={{ strokeDasharray: "3 3" }}
         content={<CustomTooltip />}

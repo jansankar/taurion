@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import AppCol from "../../commun/composants/grille/AppCol";
 import AppRow from "../../commun/composants/grille/AppRow";
 import AppPosition from "../../commun/composants/position/AppPosition";
+import { AppRadar } from "../../commun/composants/position/AppRadar";
 import { Echo } from "../../commun/composants/position/icons/IconDictionary";
 
 const contactTempList = (compteur: number): Echo[] => {
@@ -49,7 +50,7 @@ export const PositionTest = () => {
     <div>
       <AppRow>
         <AppCol span="6">
-          <AppPosition echos={contact} />
+          <AppRadar echos={contact} />
         </AppCol>
         <AppCol span="6"></AppCol>
       </AppRow>
