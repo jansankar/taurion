@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { Echo } from "../../dto/Structures";
 import AppButton from "../bouton/AppButton";
 import AppCol from "../grille/AppCol";
 import AppRow from "../grille/AppRow";
 import AppPosition from "./AppPosition";
-import { Echo } from "./icons/IconDictionary";
 
-export const AppRadar = ({ echos }: { echos: Echo[] }) => {
+export const AppRadar = ({ echos, pause, activeRefresh }: { echos: Echo[], pause: any, activeRefresh: any }) => {
   const [xMin, setXMin] = useState<number>(-200);
   const [xMax, setXMax] = useState<number>(200);
   const [yMin, setYMin] = useState<number>(-200);
@@ -58,7 +58,8 @@ export const AppRadar = ({ echos }: { echos: Echo[] }) => {
 
   return (
     <AppRow>
-      <AppCol md={11}>
+      <AppCol md={12} style={{minWidth: '460px'}}>
+        <div style={{position: "relative", float: "left"}}>
         <AppPosition
           echos={echos}
           xMin={xMin}
@@ -67,28 +68,38 @@ export const AppRadar = ({ echos }: { echos: Echo[] }) => {
           yMax={yMax}
           resize={resize}
         />
-      </AppCol>
-      <AppCol md={{span: 1}} style={{marginLeft: '-30px'}}>
-        <AppRow style={{marginTop:'20px'}}>
+        </div>
+        <div style={{width: '50px', float:"left", position: "relative", marginLeft: "-20px"}}>
+        <div style={{marginTop:'20px'}}>
           <AppButton onClick={zoomIn} actif={choixZoom === "IN"}>
             +
           </AppButton>
-        </AppRow>
-        <AppRow style={{marginTop:'10px'}}>
+        </div>
+        <div style={{marginTop:'10px'}}>
           <AppButton onClick={zoomOut} actif={choixZoom === "OUT"}>
             -
           </AppButton>
-        </AppRow>
+        </div>
 
-        <AppRow style={{marginTop:'10px'}}>
+        <div style={{marginTop:'10px'}}>
           <AppButton onClick={zoomEquals} actif={choixZoom === "NONE"}>
             =
           </AppButton>
-        </AppRow>
+        </div>
 
-        <AppRow style={{marginTop:'10px'}}>
+        <div style={{marginTop:'10px'}}>
           <AppButton onClick={reinit}>O</AppButton>
-        </AppRow>
+        </div>
+        <div style={{marginTop:'10px'}}>
+          <AppButton onClick={pause}>II</AppButton>
+        </div>
+        <div style={{marginTop:'10px'}}>
+          <AppButton onClick={activeRefresh}>&gt;</AppButton>
+        </div>
+        </div>
+      </AppCol>
+      <AppCol md={{span: 1}} style={{marginLeft: '-30px'}}>
+        
       </AppCol>
     </AppRow>
   );

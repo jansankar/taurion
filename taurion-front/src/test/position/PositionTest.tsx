@@ -2,55 +2,69 @@ import { countReset } from "console";
 import React, { useEffect, useRef, useState } from "react";
 import AppCol from "../../commun/composants/grille/AppCol";
 import AppRow from "../../commun/composants/grille/AppRow";
-import AppPosition from "../../commun/composants/position/AppPosition";
 import { AppRadar } from "../../commun/composants/position/AppRadar";
-import { Echo } from "../../commun/composants/position/icons/IconDictionary";
+import { Echo } from "../../commun/dto/Structures";
 
 const contactTempList = (compteur: number): Echo[] => {
   return [
     {
-      x: 10 + compteur * 10,
+      x: 10 + compteur * 1.5,
       y: 10 + compteur * 3,
-      vx: 0,
-      vy: 0,
-      code: "I01",
+      vx: 1.5,
+      vy: 3,
+      code: "F11",
       iff: "NEU",
-      type: "TOR",
+      type: "FRP",
     },
     {
-      x: 120 - compteur * 4,
+      x: 120 - compteur * 1.5,
       y: -80 - compteur * 2,
-      vx: 3,
-      vy: 1,
-      code: "I02",
+      vx: 1.5,
+      vy: 2,
+      code: "F01",
       iff: "ALI",
       type: "FRP",
     },
-    { x: -30, y: 25, vx: 0, vy: 0, code: "I03", iff: "HOS", type: "STA" },
-    { x: -80, y: -25, vx: 0, vy: 0, code: "M01", iff: "HOS", type: "MIS" },
+    { x: -30, y: 25, vx: -4, vy: -1, code: "S01", iff: "HOS", type: "STA" },
+    { x: 40, y: 74, vx: -4, vy: -1, code: "T02", iff: "NEU", type: "TOR" },
+    { x: -80, y: -25, vx: 10, vy: 4, code: "M01", iff: "HOS", type: "MIS" },
   ];
 };
 
 export const PositionTest = () => {
   const [contact, setContact] = useState<Echo[]>([]);
+  const [refreshActif, setRefresh] = useState<boolean>(false);
   const compteur = useRef(0);
 
   useEffect(() => {
-    if (compteur.current < 1) {
+      if (!refreshActif)
+        setContact(contactTempList(compteur.current));
+  }, []);
+
+  useEffect(() => {
+    if (refreshActif) {
       compteur.current += 1;
       const timer = setTimeout(
         () => setContact(contactTempList(compteur.current)),
-        1000
+        3000
       );
       return () => clearTimeout(timer);
     }
-  }, [contact]);
+  }, [contact, refreshActif]);
+
+  function pause() {
+    setRefresh(false);
+  }
+
+  function refresh() {
+    setRefresh(true);
+  }
 
   return (
     <div>
       <AppRow>
         <AppCol md={4}>
-          <AppRadar echos={contact} />
+          <AppRadar echos={contact} pause={pause} activeRefresh={refresh} />
         </AppCol>
         <AppCol md={6}></AppCol>
       </AppRow>

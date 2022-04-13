@@ -8,7 +8,8 @@ import {
   Tooltip,
   LabelList,
 } from "recharts";
-import { Echo, EchoFrpDot, EchoMisDot, getColor } from "./icons/IconDictionary";
+import { Echo } from "../../dto/Structures";
+import { EchoFrpDot, EchoMisDot, EchoTorpDot, getColor } from "./icons/IconDictionary";
 
 export type AppPositionProps = {
   echos: Echo[];
@@ -28,6 +29,8 @@ const CustomizedDot = (props: any) => {
       return <EchoFrpDot {...props} />;
     case "MIS":
       return <EchoMisDot {...props} />;
+    case "TOR":
+      return <EchoTorpDot {...props} />;
   }
 
   return <EchoFrpDot {...props} />;
@@ -72,8 +75,7 @@ export default function AppPosition({ echos, xMin, xMax, yMin, yMax, resize }: A
       <Scatter
         data={echos}
         fill="#23d18b"
-        isAnimationActive={true}
-        animationDuration={1000}
+        isAnimationActive={false}
         shape={<CustomizedDot />}
       ></Scatter>
     </ScatterChart>
