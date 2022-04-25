@@ -7,27 +7,23 @@ import { Echo } from "../../commun/dto/Structures";
 
 const contactTempList = (compteur: number): Echo[] => {
   return [
-    {
-      x: 10 + compteur * 1.5,
-      y: 10 + compteur * 3,
-      vx: 1.5,
-      vy: 3,
-      code: "F11",
-      iff: "NEU",
-      type: "FRP",
-    },
-    {
-      x: 120 - compteur * 1.5,
-      y: -80 - compteur * 2,
-      vx: 1.5,
-      vy: 2,
-      code: "F01",
-      iff: "ALI",
-      type: "FRP",
-    },
-    { x: -30, y: 25, vx: -4, vy: -1, code: "S01", iff: "HOS", type: "STA" },
-    { x: 40, y: 74, vx: -4, vy: -1, code: "T02", iff: "NEU", type: "TOR" },
-    { x: -80, y: -25, vx: 10, vy: 4, code: "M01", iff: "HOS", type: "MIS" },
+
+    { x: -150, y: 10, vx: 0, vy: 5, code: "C01", iff: "HOS", type: "CAB" },
+    { x: -100, y: 10, vx: 5, vy: 5, code: "C02", iff: "NEU", type: "CAB" },
+    { x: -50, y: 10, vx: 5, vy: 0, code: "C03", iff: "ALI", type: "CAB" },
+
+    { x: 50, y: 10, vx: 0, vy: 5, code: "T01", iff: "HOS", type: "TOR" },
+    { x: 100, y: 10, vx: 5, vy: 5, code: "T02", iff: "NEU", type: "TOR" },
+    { x: 150, y: 10, vx: 5, vy: 0, code: "T03", iff: "ALI", type: "TOR" },
+
+    { x: -150, y: -30, vx: 4, vy: -4, code: "M02", iff: "HOS", type: "MIS" },
+    { x: -100, y: -30, vx: 0, vy: -4, code: "M03", iff: "NEU", type: "MIS" },
+    { x: -50, y: -30, vx: -4, vy: -4, code: "M04", iff: "ALI", type: "MIS" },
+
+    { x: 50, y: -30, vx: 4, vy: -4, code: "F01", iff: "HOS", type: "FRP" },
+    { x: 100, y: -30, vx: 0, vy: -4, code: "F02", iff: "NEU", type: "FRP" },
+    { x: 150, y: -30, vx: -4, vy: -4, code: "F03", iff: "ALI", type: "FRP" },
+
   ];
 };
 

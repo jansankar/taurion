@@ -9,7 +9,7 @@ import {
   LabelList,
 } from "recharts";
 import { Echo } from "../../dto/Structures";
-import { EchoFrpDot, EchoMisDot, EchoTorpDot, getColor } from "./icons/IconDictionary";
+import { EchoCabDot, EchoFrpDot, EchoMisDot, EchoTorpDot, getColor } from "./icons/IconDictionary";
 
 export type AppPositionProps = {
   echos: Echo[];
@@ -31,6 +31,8 @@ const CustomizedDot = (props: any) => {
       return <EchoMisDot {...props} />;
     case "TOR":
       return <EchoTorpDot {...props} />;
+      case "CAB":
+        return <EchoCabDot {...props} />;
   }
 
   return <EchoFrpDot {...props} />;

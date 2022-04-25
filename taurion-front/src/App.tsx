@@ -23,10 +23,10 @@ const menuGaucheItems = useAppMenuGaucheItems() as MenuGaucheItems[];
     <div className={styles.App}>
       <Container fluid>
       <AppRow>
-        <AppCol md ={{span : 1}} >
+        <AppCol md ={{span : 2}} >
           <AppMenuGauche elements={menuGaucheItems}/>
         </AppCol>
-        <AppCol md ={{span : 11}} >
+        <AppCol md ={{span : 10}} >
          <AppRoutes />
         </AppCol>
       </AppRow>
