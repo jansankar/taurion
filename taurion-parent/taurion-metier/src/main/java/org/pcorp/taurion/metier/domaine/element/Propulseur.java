@@ -1,8 +1,12 @@
 package org.pcorp.taurion.metier.domaine.element;
 
+import org.pcorp.taurion.metier.domaine.element.carburant.Reservoir;
+import org.pcorp.taurion.metier.domaine.element.ressource.Carburant;
+import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
+import org.pcorp.taurion.metier.domaine.etat.EtatElement;
 import org.pcorp.taurion.metier.domaine.exception.NonActiveException;
-import org.pcorp.taurion.metier.element.carburant.Reservoir;
-import org.pcorp.taurion.metier.element.ressource.Carburant;
+import org.pcorp.taurion.metier.type.Integrite;
+import org.pcorp.taurion.metier.type.Tonne;
 
 public class Propulseur extends Element {
 	public final static float POUSSEE_TOUTE = 1f;
@@ -13,8 +17,14 @@ public class Propulseur extends Element {
 	private Float twr;
 	private Float isp;
 
-	public Propulseur(Integer id, Code elementCode, Float masse, Integer integrite, Float twr, Float isp, Float consoNrj) {
-		super(id, TypeElement.PROPULSION, elementCode, masse, integrite, consoNrj);
+	
+	
+	public Propulseur(
+			Integer id,
+			Code elementCode, Float masse, Integrite integrite, Float consoNrj,
+			String description,  Integrite integriteActuelle,
+			SourceEnergie sourceEnergie, Float twr, Float isp) {
+		super(TypeElement.PROPULSION, elementCode, masse, integrite, consoNrj, description, id, integriteActuelle, EtatElement.INACTIF, sourceEnergie);
 		this.isp = isp;
 		this.twr = twr;
 	}
@@ -40,7 +50,7 @@ public class Propulseur extends Element {
 		}
 
 		// calcul de la quantite de carburant utilisée
-		Float unitesCarburantsConsommees = (t / (isp / getMasse())) * pourcentagePuissance;
+		Float unitesCarburantsConsommees = (t / (isp / (getMasse()/twr))) * pourcentagePuissance;
 		boolean activationPossible = reservoir.consomme(unitesCarburantsConsommees);
 
 		if (!activationPossible) {

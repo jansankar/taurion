@@ -3,14 +3,14 @@ package org.pcorp.taurion.metier.domaine.construction;
 import java.util.List;
 
 import org.pcorp.taurion.metier.Coordonnees;
-import org.pcorp.taurion.metier.domaine.element.Composant;
 import org.pcorp.taurion.metier.domaine.element.Controlleur;
+import org.pcorp.taurion.metier.domaine.element.Element;
 import org.pcorp.taurion.metier.domaine.element.Propulseur;
 import org.pcorp.taurion.metier.domaine.element.Soute;
 import org.pcorp.taurion.metier.domaine.element.Structure;
+import org.pcorp.taurion.metier.domaine.element.carburant.Reservoir;
 import org.pcorp.taurion.metier.domaine.vecteur.Acceleration;
 import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
-import org.pcorp.taurion.metier.element.carburant.Reservoir;
 
 /**
  * Structure de base d'un vaisseau.
@@ -38,7 +38,7 @@ public class Vaisseau {
 	private List<Soute> soutes;
 
 	// composants
-	private List<Composant> composants;
+	private List<Element> elements;
 
 	public Vaisseau(Integer id, String nom, String description) {
 		super();

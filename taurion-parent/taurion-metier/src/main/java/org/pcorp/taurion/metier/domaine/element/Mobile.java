@@ -2,19 +2,27 @@ package org.pcorp.taurion.metier.domaine.element;
 
 import java.time.LocalTime;
 
-import org.pcorp.taurion.metier.Coordonnees;
+import org.pcorp.taurion.metier.domaine.construction.ObjetComplexe;
+import org.pcorp.taurion.metier.domaine.construction.TypeObjet;
 import org.pcorp.taurion.metier.domaine.vecteur.Acceleration;
 import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
+import org.pcorp.taurion.metier.type.Tonne;
 
-public abstract class Mobile {
+public abstract class Mobile extends ObjetComplexe {
 	private LocalTime derniereActualisation;
-	private Coordonnees position;
 	private Vitesse vecteurVitesse;
 	private Acceleration acceleration;
 
-	public Mobile() {
+	public Mobile(long id, TypeObjet typeObjet, Tonne masse) {
+		super(id, typeObjet, masse);
 		derniereActualisation = LocalTime.now();
-		position = new Coordonnees(0, 0, 0);
+		vecteurVitesse = new Vitesse();
+		acceleration = new Acceleration(0f, 0f, 0f);
+	}
+	
+	public Mobile(long id, TypeObjet typeObjet) {
+		super(id, typeObjet);
+		derniereActualisation = LocalTime.now();
 		vecteurVitesse = new Vitesse();
 		acceleration = new Acceleration(0f, 0f, 0f);
 	}
@@ -35,16 +43,14 @@ public abstract class Mobile {
 		vecteurVitesse.accelere(acceleration, secondes);
 		Vitesse vMoy = vecteurVitesse.moyenne(vitesseOriginale);
 
-		position.appliqueDeplacement(vMoy, secondes);
+		getPosition().appliqueDeplacement(vMoy, secondes);
 	}
 
-	public void setPosition(Coordonnees position) {
-		this.position = position;
+	
+	public void miseAZeroVitesse() {
+		vecteurVitesse = new Vitesse();
 	}
 
-	public Coordonnees getPosition() {
-		return position;
-	}
 
 	public Vitesse getVitesse() {
 		return vecteurVitesse;

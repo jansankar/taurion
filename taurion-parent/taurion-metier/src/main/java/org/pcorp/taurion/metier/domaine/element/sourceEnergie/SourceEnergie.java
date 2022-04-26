@@ -1,16 +1,19 @@
 package org.pcorp.taurion.metier.domaine.element.sourceEnergie;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Logger;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.pcorp.taurion.metier.domaine.element.Code;
 import org.pcorp.taurion.metier.domaine.element.Element;
 import org.pcorp.taurion.metier.domaine.element.TypeElement;
+import org.pcorp.taurion.metier.domaine.etat.EtatElement;
 import org.pcorp.taurion.metier.domaine.exception.FournitureEnergieDepasseeException;
+import org.pcorp.taurion.metier.type.Integrite;
 
 public class SourceEnergie extends Element {
-	private static Logger log = Logger.getLogger("SourceEnergie");
+	private static Logger log = LogManager.getLogger(SourceEnergie.class);
 
 	public static Float TAUX_URGENCE = 0.25f;
 	public static Float TAUX_DESTRUCTION = 0.10f;
@@ -25,11 +28,19 @@ public class SourceEnergie extends Element {
 	private Float energieStockable;
 	private Float energieRestante;
 
-	private List<Element> consommateurs;
+	private Set<Element> consommateurs;
 
-	public SourceEnergie(Integer id, TypeElement typeElement, Code elementCode, Float masse, Integer integrite,
+	
+	
+	public SourceEnergie(Integer id, 
+			TypeElement typeCode, 
+			Code elementCode, 
+			Float masse, 
+			Integrite integrite, 
+			String description, 
+			Integrite integriteActuelle, 
 			Float debitEnergie) {
-		super(id, typeElement, elementCode, masse, integrite, 0f);
+		super(typeCode, elementCode, masse, integrite, 0f, description, id, integriteActuelle, EtatElement.INACTIF, null);
 		generationdEnergie = debitEnergie;
 		consommationActuelle = 0f;
 	}
@@ -99,7 +110,7 @@ public class SourceEnergie extends Element {
 	// TODO: ajouter un synchro la dessus
 	public void connecterElement(Element e) {
 		if (consommateurs == null) {
-			consommateurs = new LinkedList<Element>();
+			consommateurs = new HashSet<Element>();
 		}
 
 		consommateurs.add(e);

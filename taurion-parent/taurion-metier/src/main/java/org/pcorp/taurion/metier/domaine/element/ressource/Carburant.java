@@ -1,4 +1,4 @@
-package org.pcorp.taurion.metier.element.ressource;
+package org.pcorp.taurion.metier.domaine.element.ressource;
 
 public class Carburant extends Ressources {
 	private Float indice;

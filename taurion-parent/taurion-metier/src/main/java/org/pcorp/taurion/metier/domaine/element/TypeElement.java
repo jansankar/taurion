@@ -10,7 +10,9 @@ public enum TypeElement {
 	POMPE("POMP"), //
 	GENERATEUR("GENR"), //
 	BATTERIE("BATT"), //
-	CALCULATEUR("COMP");
+	CALCULATEUR("COMP"), //
+	SOUTE("SOUT")
+	;
 
 	private TypeElement(String prefixe) {
 		this.prefixe = prefixe;

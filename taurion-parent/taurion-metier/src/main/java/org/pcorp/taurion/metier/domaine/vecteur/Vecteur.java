@@ -80,4 +80,11 @@ public class Vecteur {
 		return z;
 	}
 
+	@Override
+	public String toString() {
+		return "Vecteur [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
+
+	
+	
 }

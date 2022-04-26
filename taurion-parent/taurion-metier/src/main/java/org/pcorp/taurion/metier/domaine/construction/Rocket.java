@@ -10,10 +10,9 @@ import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
  *
  */
 public interface Rocket {
-	public void setCible(Coordonnees coordonnes);
+	public void setCible(long cibleId);
 	public void positionneSurPasDeTir(Coordonnees pasDeTir);
 	public Coordonnees getCoordonnees();
-	public Coordonnees getCoordonneesCible();
 	public Vitesse getVitesse();
 	public void activer();
 	public void desactive();
@@ -23,7 +22,7 @@ public interface Rocket {
 	public void desarmementCharge();
 	public EtatArmement getEtatArmement();
 	
-	public void miseAFeu();
+	public void miseAFeu(ObjetComplexe objetCible);
 	
 	
 }

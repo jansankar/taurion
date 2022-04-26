@@ -1,9 +1,12 @@
-package org.pcorp.taurion.metier.element.carburant;
+package org.pcorp.taurion.metier.domaine.element.carburant;
 
 import org.pcorp.taurion.metier.domaine.element.Code;
 import org.pcorp.taurion.metier.domaine.element.Element;
 import org.pcorp.taurion.metier.domaine.element.TypeElement;
-import org.pcorp.taurion.metier.element.ressource.Carburant;
+import org.pcorp.taurion.metier.domaine.element.ressource.Carburant;
+import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
+import org.pcorp.taurion.metier.domaine.etat.EtatElement;
+import org.pcorp.taurion.metier.type.Integrite;
 
 public class Reservoir extends Element {
 	private Float capacite;
@@ -12,11 +15,23 @@ public class Reservoir extends Element {
 
 	// FIXME ajout d'une pompe
 
-	public Reservoir(Integer id, Code elementCode, Float masse, Float capacite, Float reste, Integer integrite) {
-		super(id, TypeElement.RESERVOIR_CARBURANT, elementCode, masse, integrite, 0f);
+	public Reservoir( //
+			Integer id, 
+			Code elementCode, 
+			Float masse, 
+			Integrite integrite, 
+			Float consoNrj,
+			String description, 
+			Integrite integriteActuelle, 
+			EtatElement etatActuel,
+			SourceEnergie sourceEnergie, 
+			Float capacite, 
+			Float reste) {
+		super(TypeElement.RESERVOIR_CARBURANT, elementCode, masse, integrite, consoNrj, description, id, integriteActuelle, etatActuel, sourceEnergie);
 		this.capacite = capacite;
-		this.reste = reste;
+		this.reste = reste;	
 	}
+	
 
 	public Float getCapacite() {
 		return capacite;

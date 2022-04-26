@@ -1,4 +1,4 @@
-package org.pcorp.taurion.metier.element.ressource;
+package org.pcorp.taurion.metier.domaine.element.ressource;
 
 public class Ressources {
 	private Integer id;

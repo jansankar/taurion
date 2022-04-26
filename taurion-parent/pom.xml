@@ -1,6 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.7</version>
+	</parent>
 
   <groupId>org.pcorp.taurion</groupId>
   <artifactId>taurion-parent</artifactId>
@@ -12,8 +17,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>5.3.18</spring.version>
-    <junit.version>4.12</junit.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
@@ -24,19 +27,12 @@
     <module>taurion-backend</module>
   </modules>
   
-  <dependencyManagement>
-   <dependencies>
-  	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-core</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-    <dependency>
-	    <groupId>junit</groupId>
-    	<artifactId>junit</artifactId>
-    	<version>${junit.version}</version>
-    	<scope>test</scope>
-    </dependency>
-    </dependencies>
-  </dependencyManagement>	
+  <dependencies>
+
+  <dependency>
+  	<groupId>org.apache.logging.log4j</groupId>
+  	<artifactId>log4j-api</artifactId>
+  </dependency>
+  </dependencies>
+ 	
 </project>

@@ -1,30 +1,31 @@
 package org.pcorp.taurion.metier.domaine.element;
 
+import org.pcorp.taurion.metier.configuration.ElementConfiguration;
 import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
 import org.pcorp.taurion.metier.domaine.etat.EtatElement;
 import org.pcorp.taurion.metier.domaine.evenement.ResultatDiminutionIntegrite;
+import org.pcorp.taurion.metier.type.Integrite;
 
-public class Element {
+public class Element extends ElementConfiguration {
 	private Integer id;
-	private TypeElement typeCode;
-	private Code elementCode;
-	private Float masse;
-	private Integer integrite;
-	private Integer integriteActuelle;
+	private Integrite integriteActuelle;
 	private EtatElement etatActuel;
-	private Float consoNrj;
 	private SourceEnergie sourceEnergie;
 
-	public Element(Integer id, TypeElement typeCode, Code elementCode, Float masse, Integer integrite, Float consoNrj) {
-		super();
+	
+	public Element(TypeElement typeCode, Code elementCode, Float masse, Integrite integrite, Float consoNrj,
+			String description, Integer id, Integrite integriteActuelle, EtatElement etatActuel,
+			SourceEnergie sourceEnergie) {
+		super(typeCode, elementCode, masse, integrite, consoNrj, description);
 		this.id = id;
-		this.typeCode = typeCode;
-		this.elementCode = elementCode;
-		this.masse = masse;
-		this.integrite = integrite;
-		this.integriteActuelle = integrite;
-		this.consoNrj = consoNrj;
+		this.integriteActuelle = integriteActuelle;
+		this.etatActuel = etatActuel;
+		this.sourceEnergie = sourceEnergie;
+		if (sourceEnergie != null)
+			sourceEnergie.connecterElement(this);
 	}
+
+
 
 	/**
 	 * Application d'une perte d'integrite
@@ -33,18 +34,16 @@ public class Element {
 	 * @return
 	 */
 	public ResultatDiminutionIntegrite diminueIntegrite(Integer valeur) {
-		Integer nouvelleIntegrite = integriteActuelle - valeur;
+		Integrite nouvelleIntegrite = integriteActuelle.diminueIntegrite(valeur);
 
 		ResultatDiminutionIntegrite resultatDiminutionIntegrite = null;
 
-		if (nouvelleIntegrite < integrite) {
+		if (nouvelleIntegrite.compareTo(getIntegrite()) < 0) {
 			setEtatActuel(EtatElement.ENDOMMAGE);
-			setIntegriteActuelle(nouvelleIntegrite);
 		}
 
-		if (nouvelleIntegrite <= 0) {
+		if (nouvelleIntegrite.isNulle()) {
 			setEtatActuel(EtatElement.DETRUIT);
-			setIntegriteActuelle(0);
 		}
 
 		return resultatDiminutionIntegrite;
@@ -58,7 +57,7 @@ public class Element {
 	 */
 	protected ResultatDiminutionIntegrite calculResultatDiminutionIntegrite(Integer nouvelleIntegrite) {
 		ResultatDiminutionIntegrite resultatDiminutionIntegrite = new ResultatDiminutionIntegrite(
-				getIntegriteActuelle(), getEtatActuel());
+				integriteActuelle.getIntegrite(), getEtatActuel());
 
 		if (resultatDiminutionIntegrite.getNouvelEtat() == EtatElement.DETRUIT) {
 			resultatDiminutionIntegrite.setDommagePropage(destruction(nouvelleIntegrite));
@@ -82,19 +81,19 @@ public class Element {
 	}
 
 	public void activer() {
-		if (consoNrj > 0 && sourceEnergie == null)
+		if (getConsoNrj() > 0 && sourceEnergie == null)
 			throw new RuntimeException("element non alimenté - activation impossible");
 
-		if (consoNrj <= 0 && sourceEnergie == null) {
+		if (getConsoNrj() <= 0 && sourceEnergie == null) {
 			setEtatActuel(EtatElement.ACTIF);
 			return;
 		}
 
-		if (getIntegriteActuelle() > 0) {
+		if (!integriteActuelle.isNulle()) {
 			setEtatActuel(EtatElement.ACTIF);
 			sourceEnergie.refresh();
 		} else {
-			throw new RuntimeException("element endommagé - activation impossible");
+			throw new RuntimeException("element détruit/endommagé - activation impossible");
 		}
 	}
 
@@ -121,36 +120,8 @@ public class Element {
 		return id;
 	}
 
-	public TypeElement getTypeCode() {
-		return typeCode;
-	}
-
-	public Code getElementCode() {
-		return elementCode;
-	}
-
-	public Float getMasse() {
-		return masse;
-	}
-
-	public Integer getIntegrite() {
-		return integrite;
-	}
-
-	public Integer getIntegriteActuelle() {
-		return integriteActuelle;
-	}
-
-	private void setIntegriteActuelle(Integer integriteActuelle) {
-		this.integriteActuelle = integriteActuelle;
-	}
-
 	public EtatElement getEtatActuel() {
 		return etatActuel;
-	}
-
-	public Float getConsoNrj() {
-		return consoNrj;
 	}
 
 	public SourceEnergie getSourceEnergie() {
@@ -179,6 +150,7 @@ public class Element {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		return true;
+
+		return getTypeCode().equals(other.getTypeCode());
 	}
 }

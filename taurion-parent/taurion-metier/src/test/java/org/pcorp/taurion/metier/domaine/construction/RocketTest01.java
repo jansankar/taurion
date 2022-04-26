@@ -1,14 +1,18 @@
 package org.pcorp.taurion.metier.domaine.construction;
 
-import java.util.logging.Logger;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.pcorp.taurion.metier.Coordonnees;
 import org.pcorp.taurion.metier.TestParent;
 import org.pcorp.taurion.metier.domaine.construction.rocket.Rocket_mk00;
 import org.pcorp.taurion.metier.domaine.element.armement.charge.Charge;
 import org.pcorp.taurion.metier.domaine.element.armement.charge.ChargeInerte;
+import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
 import org.pcorp.taurion.metier.domaine.etat.EtatArmement;
 import org.pcorp.taurion.metier.type.Masse;
 
@@ -16,46 +20,42 @@ public class RocketTest01 extends TestParent {
 
 	private Rocket rocket01;
 
-	private Logger log = Logger.getLogger("RocketTest01");
+	private Logger log = LogManager.getLogger(RocketTest01.class);
 
+	private Rocket cible;
+	
 	protected Charge getCharge() {
 		return new ChargeInerte(new Masse(10f));
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
-		rocket01 = new Rocket_mk00(getReservoirTest(), getPropulseurTest(), getSourceEnergie(), getCharge());
+		SourceEnergie batterie = getSourceEnergie();
+		rocket01 = new Rocket_mk00(getReservoirTest(batterie), getPropulseurTest(batterie), batterie, getCharge());
+		((Rocket_mk00)rocket01).init();
+		
+		batterie = getSourceEnergie();
+		cible = new Rocket_mk00(getReservoirTest(batterie), getPropulseurTest(batterie), batterie, getCharge());
+		cible.positionneSurPasDeTir(new Coordonnees(10, 20, 30));
 	}
 
 	@Test
 	public void testActiveRocket() {
+		log.info("Position pas de tir");
+		rocket01.positionneSurPasDeTir(new Coordonnees(0f, 0f, 0f));
+		
 		log.info("Activation roquette");
 		rocket01.activer();
-		Assert.assertEquals("activation échouée", true, rocket01.estActive());
+		Assertions.assertEquals(true, rocket01.estActive(), "activation échouée");
 
 		log.info("Armement charge");
 		rocket01.armementCharge();
-		Assert.assertEquals("charge armée", EtatArmement.ARME, rocket01.getEtatArmement());
+		Assertions.assertEquals(EtatArmement.ARME, rocket01.getEtatArmement(), "charge armée");
 
+		log.info("saisie coordonnee");
+		rocket01.setCible(50);
+		
 		log.info("Mise à feu");
-		rocket01.miseAFeu();
+		rocket01.miseAFeu((ObjetComplexe) cible);
 	}
-
-	/*
-	 * @BeforeClass - oneTimeSetUp
-	 * 
-	 * @Before - setUp
-	 * 
-	 * @Test - testEmptyCollection
-	 * 
-	 * @After - tearDown
-	 * 
-	 * @Before - setUp
-	 * 
-	 * @Test - testOneItemCollection
-	 * 
-	 * @After - tearDown
-	 * 
-	 * @AfterClass - oneTimeTearDown
-	 */
 }
