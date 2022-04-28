@@ -2,6 +2,7 @@ package org.pcorp.taurion.metier.domaine.construction;
 
 import org.pcorp.taurion.metier.Coordonnees;
 import org.pcorp.taurion.metier.domaine.etat.EtatArmement;
+import org.pcorp.taurion.metier.domaine.evenement.ResultatDeplacement;
 import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
 
 /**
@@ -10,7 +11,9 @@ import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
  *
  */
 public interface Rocket {
+	public long getId();
 	public void setCible(long cibleId);
+	public long getCible();
 	public void positionneSurPasDeTir(Coordonnees pasDeTir);
 	public Coordonnees getCoordonnees();
 	public Vitesse getVitesse();
@@ -23,6 +26,7 @@ public interface Rocket {
 	public EtatArmement getEtatArmement();
 	
 	public void miseAFeu(ObjetComplexe objetCible);
+	public ResultatDeplacement deplace(ObjetComplexe objetCible);
 	
 	
 }

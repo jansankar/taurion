@@ -1,5 +1,7 @@
 package org.pcorp.taurion.metier.domaine.vecteur;
 
+import org.pcorp.taurion.metier.util.MathUtil;
+
 public class Vecteur {
 	private Float x;
 	private Float y;
@@ -82,9 +84,8 @@ public class Vecteur {
 
 	@Override
 	public String toString() {
-		return "Vecteur [x=" + x + ", y=" + y + ", z=" + z + "]";
+		return "Vecteur [x=" + MathUtil.round3(x) + ", y=" + MathUtil.round3(y) + ", z=" + MathUtil.round3(z) + "]";
 	}
 
-	
 	
 }

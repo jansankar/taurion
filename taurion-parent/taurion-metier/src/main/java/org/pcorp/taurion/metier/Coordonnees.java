@@ -2,6 +2,7 @@ package org.pcorp.taurion.metier;
 
 import org.pcorp.taurion.metier.domaine.vecteur.Vecteur;
 import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
+import org.pcorp.taurion.metier.util.MathUtil;
 
 public class Coordonnees {
 	private Float x;
@@ -40,9 +41,9 @@ public class Coordonnees {
 	}
 
 	public void appliqueDeplacement(Vitesse v, Float t) {
-		x = v.getVitesseX() * t;
-		y = v.getVitesseY() * t;
-		z = v.getVitesseZ() * t;
+		x = x + v.getVitesseX() * t;
+		y = y + v.getVitesseY() * t;
+		z = z + v.getVitesseZ() * t;
 	}
 	
 	public Vecteur getDifference(Coordonnees destination) {
@@ -70,4 +71,10 @@ public class Coordonnees {
 		return z;
 	}
 
+	@Override
+	public String toString() {
+		return "Coordonnees [x=" + MathUtil.round(x, 2) + ", y=" + MathUtil.round(y, 2) + ", z=" + MathUtil.round(z, 2) + "]";
+	}
+	
+	
 }

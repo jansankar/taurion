@@ -1,7 +1,7 @@
 package org.pcorp.taurion.metier.domaine.construction.rocket;
 
 import org.pcorp.taurion.metier.Coordonnees;
-import org.pcorp.taurion.metier.Timer;
+import org.pcorp.taurion.metier.AppTimer;
 import org.pcorp.taurion.metier.domaine.construction.ObjetComplexe;
 import org.pcorp.taurion.metier.domaine.construction.Rocket;
 import org.pcorp.taurion.metier.domaine.construction.TypeObjet;
@@ -12,9 +12,11 @@ import org.pcorp.taurion.metier.domaine.element.carburant.Reservoir;
 import org.pcorp.taurion.metier.domaine.element.ressource.Carburant;
 import org.pcorp.taurion.metier.domaine.element.sourceEnergie.SourceEnergie;
 import org.pcorp.taurion.metier.domaine.etat.EtatArmement;
-import org.pcorp.taurion.metier.domaine.etat.EtatElement;
+import org.pcorp.taurion.metier.domaine.evenement.ResultatDeplacement;
 import org.pcorp.taurion.metier.domaine.vecteur.Vecteur;
+import org.pcorp.taurion.metier.domaine.vecteur.Vitesse;
 import org.pcorp.taurion.metier.type.Tonne;
+import org.pcorp.taurion.metier.util.MathUtil;
 
 public class Rocket_mk00 extends Mobile implements Rocket {
 	// information rocket
@@ -22,28 +24,27 @@ public class Rocket_mk00 extends Mobile implements Rocket {
 	private Propulseur propulseur;
 	private SourceEnergie batterie;
 	private Charge charge;
-	private EtatElement etatElement;
 
 	//
 	private long cibleId;
 
-	public Rocket_mk00(Reservoir reservoir, Propulseur propulseur, SourceEnergie batterie, Charge charge) {
-		super(100, TypeObjet.MIS);
+	public Rocket_mk00(long id, Reservoir reservoir, Propulseur propulseur, SourceEnergie batterie, Charge charge) {
+		super(id, TypeObjet.MIS);
 		this.reservoir = reservoir;
 		this.propulseur = propulseur;
 		this.batterie = batterie;
 		this.charge = charge;
 
 		this.batterie.connecterElement(propulseur);
-		
-		float masseTotale = (reservoir.getMasse() + propulseur.getMasse() + batterie.getMasse())*2;
+
+		float masseTotale = (reservoir.getMasse() + propulseur.getMasse() + batterie.getMasse()) * 2;
 		setMasse(new Tonne(masseTotale));
 	}
 
 	public void init() {
 		reservoir.ajoute(reservoir.getCapacite(), new Carburant(1, 1f, 1f));
 	}
-	
+
 	@Override
 	public void setCible(long cibleId) {
 		this.cibleId = cibleId;
@@ -65,7 +66,7 @@ public class Rocket_mk00 extends Mobile implements Rocket {
 		reservoir.activer();
 		batterie.activer();
 		propulseur.activer();
-		etatElement = EtatElement.ACTIF;
+		super.activer();
 	}
 
 	@Override
@@ -73,13 +74,7 @@ public class Rocket_mk00 extends Mobile implements Rocket {
 		reservoir.inactiver();
 		batterie.inactiver();
 		propulseur.inactiver();
-
-		etatElement = EtatElement.INACTIF;
-	}
-
-	@Override
-	public boolean estActive() {
-		return etatElement == EtatElement.ACTIF;
+		super.desactive();
 	}
 
 	@Override
@@ -107,44 +102,55 @@ public class Rocket_mk00 extends Mobile implements Rocket {
 		// TODO: check activation
 
 		// activation propulseur jusqu'à la cible
+		deplace(objetCible);
+
+		
+	}
+	
+	@Override
+	public ResultatDeplacement deplace(ObjetComplexe objetCible) {
 		Float poussee = 0f;
 		try {
-			poussee = propulseur.activePoussee(Timer.INTERVAL, Propulseur.POUSSEE_TOUTE, this.reservoir);
+			poussee = propulseur.activePoussee(AppTimer.TEMPS_ACTIF, Propulseur.POUSSEE_TOUTE, this.reservoir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		Vecteur direction = getCoordonnees().getDifference(objetCible.getPosition());
-		System.out.println(direction);
-		calculVecteurVitesse(poussee, direction);
+		Vecteur vitesse = calculVecteurVitesse(poussee, direction);
+		deplace(new Vitesse(vitesse));
+		return new ResultatDeplacement();
 	}
 	
-	float atan(float y, float x) {
-	    return (float) Math.atan(y/x);
-	  }
-	
-	float cos(float a) {
-	    return (float) Math.cos(a);
-	  }
-	
-	float sin(float a) {
-	    return (float) Math.sin(a);
-	  }
-	
+	@Override
+	public long getCible() {
+		return cibleId;
+	}
+
 	private Vecteur calculVecteurVitesse(float pousse, Vecteur direction) {
-		float deplacementDisponible = pousse/getMasse().getTonne();
-		float angleHorizontal = atan(direction.getY(), direction.getX());
-		float angleVertical   = atan(direction.getZ(), direction.getX());
-		System.out.println("angleHorizontal : " + angleHorizontal);
-		System.out.println("angleVertical : " + angleVertical);
-		float vx = deplacementDisponible * cos(angleHorizontal);
-		float vy = deplacementDisponible * sin(angleHorizontal);
-		float vz = deplacementDisponible * sin(angleVertical);
-		System.out.println("deplacementDisponible : " + deplacementDisponible);
-		System.out.println("vx : " + vx);
-		System.out.println("vy : " + vy);
-		System.out.println("vz : " + vz);
-		System.out.println("vx : " + deplacementDisponible * cos(angleVertical));
+		float deplacementMaximumAttendu = MathUtil.hypo(direction.getX(), direction.getY(), direction.getZ());
+		
+		float deplacementDisponible = pousse / getMasse().getTonne();
+		if(deplacementMaximumAttendu < deplacementDisponible)
+			deplacementDisponible = deplacementMaximumAttendu;
+		
+		float angleHorizontal = MathUtil.atan(direction.getY(), direction.getX());
+		float angleVertical = MathUtil.atan(direction.getZ(), MathUtil.hypo(direction.getX(), direction.getY()));
+		
+		float vz = Math.abs(deplacementDisponible * MathUtil.sin(angleVertical));
+		float dxy = deplacementDisponible * MathUtil.cos(angleVertical);
+		float vx = Math.abs(dxy * MathUtil.cos(angleHorizontal));
+		float vy = Math.abs(dxy * MathUtil.sin(angleHorizontal));
+		
+		if(direction.getX() < 0) 
+			vx = vx*-1;
+		if(direction.getY() < 0) 
+			vy = vy*-1;
+		if(direction.getZ() < 0) 
+			vz = vz*-1;
+		
 		return new Vecteur(vx, vy, vz);
 	}
+
+	
 }
